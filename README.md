@@ -1,6 +1,6 @@
 reservation_system
 ======================
-Simple local app for managing reservations
+Simple local app for managing customers reservations.
 
 
 Set up
