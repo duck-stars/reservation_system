@@ -71,12 +71,12 @@ function validateAge(field: QLineEdit, logsLabel: QLabel): boolean{
 function getReservedTimes(filePath: string): string[]{
   const result: string[] = [];
   const data = jsonfile.readFileSync(filePath);
-    for (const patient of data) {
-      result.push(patient["Reserved Day"].toString() +
-        patient["Reserved Month"].toString() +
-        patient["Reserved Year"].toString() +
-        patient["Reserved Time Minute"].toString() +
-        patient["Reserved Time Hour"].toString()
+    for (const customer of data) {
+      result.push(customer["Reserved Day"].toString() +
+        customer["Reserved Month"].toString() +
+        customer["Reserved Year"].toString() +
+        customer["Reserved Time Minute"].toString() +
+        customer["Reserved Time Hour"].toString()
       );
   };
   return result;

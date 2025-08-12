@@ -65,7 +65,7 @@ function removeFromJSON(filePath: string, listWidgetItem: QListWidgetItem, logsL
 
         const id = Number(listWidgetItem.text().match(/^\d+/)); // Adjusted regex to match optional 'x'
 
-        const index = jsonData.findIndex(patient => patient["id"] === id);
+        const index = jsonData.findIndex(customer => customer["id"] === id);
         if (index !== -1) {
             jsonData.splice(index, 1);
 
@@ -89,9 +89,9 @@ function updateList(filePath: string, listWidget: QListWidget, logsLabel: QLabel
             listWidget.addItem(arbitraryItem);
         }
         const data = jsonfile.readFileSync(filePath);
-        for (const patient of data) {
+        for (const customer of data) {
             const newItem = new QListWidgetItem();
-            newItem.setText(`${patient["id"]}: ${patient["Last Name"]}`);
+            newItem.setText(`${customer["id"]}: ${customer["Last Name"]}`);
             newItem.setFont(new QFont("B Mitra", 14));
             newItem.setTextAlignment(AlignmentFlag.AlignCenter);
             listWidget.addItem(newItem);
@@ -123,23 +123,23 @@ function fillFields(
 
         const id = Number(listWidgetItem.text().match(/^\d+/));
 
-        for (const patient of jsonData) {
-            if (patient["id"] === id) {
-                firstNameField.setText(patient["First Name"]);
-                lastNameField.setText(patient["Last Name"]);
-                genderField.setCurrentIndex(patient["Gender"]);
-                ageField.setText(patient["Age"]);
-                callNumberField.setText(patient["Call Number"]);
-                identityCodeField.setText(patient["ID Code"]);
-                dayField.setValue(patient["Reserved Day"]);
-                monthField.setCurrentIndex(patient["Reserved Month"]);
-                yearField.setValue(patient["Reserved Year"]);
+        for (const customer of jsonData) {
+            if (customer["id"] === id) {
+                firstNameField.setText(customer["First Name"]);
+                lastNameField.setText(customer["Last Name"]);
+                genderField.setCurrentIndex(customer["Gender"]);
+                ageField.setText(customer["Age"]);
+                callNumberField.setText(customer["Call Number"]);
+                identityCodeField.setText(customer["ID Code"]);
+                dayField.setValue(customer["Reserved Day"]);
+                monthField.setCurrentIndex(customer["Reserved Month"]);
+                yearField.setValue(customer["Reserved Year"]);
 
                 const time = new QTime();
-                time.setHMS(patient["Reserved Time Hour"], patient["Reserved Time Minute"], 0);
+                time.setHMS(customer["Reserved Time Hour"], customer["Reserved Time Minute"], 0);
                 timeField.setTime(time);
 
-                break; // Stop once the matching patient is found
+                break; // Stop once the matching customer is found
             }
         }
     } catch (err) {

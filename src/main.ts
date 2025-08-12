@@ -41,7 +41,7 @@ function main(): void {
       return Math.floor(Math.random() * (10000 - 10 + 1)) + 10;
     }
     
-  function exportPatient(ID?: number): void{
+  function exportCustomer(ID?: number): void{
     const id = ID !== undefined ? ID : getRandomId()
     exportToJSON(databasePath,
       dataToObject(firstNameField, lastNameField, 
@@ -153,21 +153,21 @@ function main(): void {
 
   const numberFont = new QFont("Arial", 11.5);
 
-  // List of Patients, `Add` and `Remove` Buttons
-  const patientList = new QListWidget();
-  patientList.setFont(listItemsFont);
+  // List of Customers, `Add` and `Remove` Buttons
+  const customerList = new QListWidget();
+  customerList.setFont(listItemsFont);
 
-  // Append the [Add New Patient] Item to List
-  const addPatient = new QListWidgetItem("افزودن بیمار جدید");
-  addPatient.setFont(new QFont("B Titr", 15))
-  addPatient.setBackground(new QBrush(new QColor("#ccffffff")));
-  addPatient.setTextAlignment(AlignmentFlag.AlignCenter);
-  patientList.addItem(addPatient);
+  // Append the [Add New Customer] Item to List
+  const addCustomer = new QListWidgetItem("افزودن بیمار جدید");
+  addCustomer.setFont(new QFont("B Titr", 15))
+  addCustomer.setBackground(new QBrush(new QColor("#ccffffff")));
+  addCustomer.setTextAlignment(AlignmentFlag.AlignCenter);
+  customerList.addItem(addCustomer);
 
-  patientList.addEventListener("currentItemChanged", () => {
-    // Fill Fields Based on Selected Patient on List
+  customerList.addEventListener("currentItemChanged", () => {
+    // Fill Fields Based on Selected Customer on List
       currentTimeSignature = undefined;
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         if(!(fieldsCache.length === 0)){
           fillFromCache(fieldsCache);
         }
@@ -185,7 +185,7 @@ function main(): void {
         reserveButtonSignal = "add";
       }
       else{
-        fillFields(databasePath, patientList.currentItem(), firstNameField, lastNameField, 
+        fillFields(databasePath, customerList.currentItem(), firstNameField, lastNameField, 
         genderField, ageField, callNumberField, 
         identityCodeField, dayField, monthField, 
         yearField, timeField)
@@ -197,7 +197,7 @@ function main(): void {
       })
 
   const listLayout = new QBoxLayout(Direction.TopToBottom);
-  listLayout.addWidget(patientList, 8);
+  listLayout.addWidget(customerList, 8);
   
   const editButton = new QPushButton();
   editButton.setText("ویرایش");
@@ -226,8 +226,8 @@ function main(): void {
   removeButton.setText("حذف");
   removeButton.setFont(buttonSmallFont);
   removeButton.addEventListener("clicked", () => {
-    removeFromJSON(databasePath, patientList.currentItem(), logsLabel)
-    patientList.takeItem(patientList.currentRow());
+    removeFromJSON(databasePath, customerList.currentItem(), logsLabel)
+    customerList.takeItem(customerList.currentRow());
   });
 
   listLayout.addWidget(removeButton, 1)
@@ -259,13 +259,13 @@ function main(): void {
   titleLayout.addWidget(mainTitle);
   contentLayout.addWidget(titleWidget);
 
-  // ... Patient Information Layout
+  // ... Customer Information Layout
   const infoLayout = new QBoxLayout(Direction.TopToBottom);
   const infoWidget = new QWidget();
   infoWidget.setLayout(infoLayout);
   contentLayout.addWidget(infoWidget);
 
-  // ... ... Title of Patient Information Layout
+  // ... ... Title of Customer Information Layout
   const infoTitle = new QLabel();
   infoTitle.setText("اطلاعات بیمار");
   infoTitle.setFont(titleFont);
@@ -278,14 +278,14 @@ function main(): void {
   infoTitleWidget.setLayout(infoTitleLayout);
   infoLayout.addWidget(infoTitleWidget);
 
-  // ... ... Patient Information Fields and Labels Layout
+  // ... ... Customer Information Fields and Labels Layout
   const infoFieldsLayout = new QGridLayout();
   const infoFieldsWidget = new QWidget();
   infoFieldsWidget.setLayout(infoFieldsLayout);
   infoLayout.addWidget(infoFieldsWidget);
   infoFieldsLayout.setHorizontalSpacing(30);
 
-  // ... ... ... Patient Information Labels
+  // ... ... ... Customer Information Labels
   const firstNameLabel = new QLabel();
   firstNameLabel.setText("نام")
   firstNameLabel.setFont(labelFont)
@@ -324,7 +324,7 @@ function main(): void {
   
   infoFieldsLayout.setRowMinimumHeight(2 ,15);
 
-  // ... ... ... Patient Information Fields
+  // ... ... ... Customer Information Fields
   const firstNameField = new QLineEdit();
   firstNameField.setFont(fieldFont);
   firstNameField.setAlignment(AlignmentFlag.AlignCenter);
@@ -473,22 +473,22 @@ function main(): void {
     && validateAge(ageField, logsLabel)
     && (validateInterference(databasePath, dayField, monthField, yearField, timeField, logsLabel)))
     {
-      // This pieces of code, Adds the new patient to the list at current program session
+      // This pieces of code, Adds the new customer to the list at current program session
       if(reserveButtonSignal === "add"
         && validateInterference(databasePath, dayField, monthField, yearField, timeField, logsLabel)
       ){
-        exportPatient();
-        removeAllExceptFirst(patientList);
-        updateList(databasePath, patientList, logsLabel, addPatient);
+        exportCustomer();
+        removeAllExceptFirst(customerList);
+        updateList(databasePath, customerList, logsLabel, addCustomer);
         disableFields();
       }
       else if(reserveButtonSignal === "update"){
-          id = getIdByItem(patientList.currentItem());
-          removeFromJSON(databasePath, patientList.currentItem(), logsLabel);
-          exportPatient(id);
-          removeAllExceptFirst(patientList);
+          id = getIdByItem(customerList.currentItem());
+          removeFromJSON(databasePath, customerList.currentItem(), logsLabel);
+          exportCustomer(id);
+          removeAllExceptFirst(customerList);
 
-          updateList(databasePath, patientList, logsLabel, addPatient);
+          updateList(databasePath, customerList, logsLabel, addCustomer);
           disableFields();
       };
 
@@ -523,54 +523,54 @@ function main(): void {
 
   // Save Cache When any of the fields changed
     firstNameField.addEventListener("textEdited", () => {
-      if(patientList.currentIndex().row() === 0){
-        if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
+        if(customerList.currentIndex().row() === 0){
         saveCache();
         }
       }
     })
     lastNameField.addEventListener("textEdited", () => {
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         saveCache();
       }
     })
     genderField.addEventListener("currentIndexChanged", () => {
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         saveCache();
       }
     })
     ageField.addEventListener("textEdited", () => {
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         saveCache();
       }
     })
     callNumberField.addEventListener("textEdited", () => {
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         saveCache();
       }
     })
     identityCodeField.addEventListener("textEdited", () => {
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         saveCache();
       }
     })
     dayField.addEventListener("valueChanged", () => {
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         saveCache();
       }
     })
     monthField.addEventListener("currentIndexChanged", () => {
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         saveCache();
       }
     })
     yearField.addEventListener("valueChanged", () => {
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         saveCache();
       }
     })
     timeField.addEventListener("dateChanged", () => {
-      if(patientList.currentIndex().row() === 0){
+      if(customerList.currentIndex().row() === 0){
         saveCache();
       }
     })
@@ -598,7 +598,7 @@ function main(): void {
   centralWidget.setLayout(layout);
   win.setCentralWidget(centralWidget);
 
-  updateList(databasePath, patientList, logsLabel, addPatient);
+  updateList(databasePath, customerList, logsLabel, addCustomer);
   win.show();
 
     (global as any).win = win;
