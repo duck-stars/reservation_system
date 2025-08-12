@@ -247,7 +247,7 @@ function main(): void {
 
   // ... ... Title of Program
   const mainTitle = new QLabel();
-  mainTitle.setText("سامانه رزرو نوبت مطب");
+  mainTitle.setText("سامانه رزرو نوبت");
   mainTitle.setFont(mainTitleFont);
   mainTitle.setAlignment(AlignmentFlag.AlignCenter);
   mainTitle.setObjectName("title-label")
