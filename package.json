@@ -1,7 +1,7 @@
 {
-  "name": "nodegui-simple-starter",
+  "name": "reservation_system",
   "version": "1.0.0",
-  "description": "A NodeGui starter project",
+  "description": "A NodeGui reservation local app",
   "scripts": {
     "build": "npm run build-code && npm run build-bundle",
     "build-code": "tsc",
@@ -12,17 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sedwards2009/nodegui-simple-starter.git"
+    "url": "git+https://github.com/duck-stars/reservation_system.git"
   },
   "keywords": [
-    "nodegui"
+    "reservation"
   ],
-  "author": "Simon Edwards",
+  "author": "Seyed Yasin Mirhashemi",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sedwards2009/nodegui-simple-starter/issues"
-  },
-  "homepage": "https://github.com/sedwards2009/nodegui-simple-starter#readme",
+  "homepage": "https://github.com/duck-stars/reservation_system/#readme",
   "devDependencies": {
     "@types/node": "^20.3.1",
     "esbuild": "^0.18.4",
